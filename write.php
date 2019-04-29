@@ -1,18 +1,17 @@
 <?php
 if(isset($_POST["message"]))
 {
-$myfile = fopen("message.txt", "r");
-$x = fread($myfile, "100000");
-$txt = $x."\n".$_POST["message"]."\n";
-fclose($myfile);
-$myfile = fopen("message.txt", "w") or die("Unable to open file!");
+$txt = $_POST["message"]."\n";
+$myfile = fopen("message.txt", "a+") or die("Unable to open file!");
 fwrite($myfile, $txt);
+fclose($myfile);
 }
-fclose($myfile);
-
-$myfile = fopen("http://192.168.6.185/message.txt", "r") or die("Unable to open file!");
-echo fread($myfile, "100000"); 
-fclose($myfile);
+$fn = fopen("http://192.168.6.185/message.txt", "r") or die("Unable to open file!");
+while(! feof($fn))  {
+	$result = fgets($fn);
+	echo $result."<br/>";
+}
+fclose($fn);
 ?>
 
 <HTML>
